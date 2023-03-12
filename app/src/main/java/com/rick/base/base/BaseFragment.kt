@@ -22,10 +22,10 @@ abstract class BaseFragment<B : ViewDataBinding, Vm : ViewModel> : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // 创建 ViewDataBinding 实例，并绑定生命周期
-        val binding = createBinding()
+        binding = createBinding()
         binding.lifecycleOwner = viewLifecycleOwner
         // 创建 ViewModel 实例
-        val viewModel = createViewModel()
+        viewModel = createViewModel()
         // 初始化
         init(binding, viewModel)
         return binding.root
