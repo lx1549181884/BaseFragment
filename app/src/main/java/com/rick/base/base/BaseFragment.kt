@@ -36,16 +36,9 @@ abstract class BaseFragment<B : ViewDataBinding, Vm : ViewModel> : Fragment() {
      */
     private fun createBinding(): B {
         // 获取 ViewDataBinding 具体类型
-        val bindingClass = getBindingClass()
+        val clazz: Class<B> = TypeUtil.getClass(this, BaseFragment::class.java, 0)
         // 反射 ViewDataBinding.inflate(LayoutInflater) 方法创建实例
-        return ReflectUtils.reflect(bindingClass).method("inflate", layoutInflater).get()
-    }
-
-    /**
-     * 获取 ViewDataBinding 具体类型
-     */
-    private fun getBindingClass(): Class<B> {
-        return TypeUtil.getClass(this, BaseFragment::class.java, 0)
+        return ReflectUtils.reflect(clazz).method("inflate", layoutInflater).get()
     }
 
     /**
@@ -53,16 +46,9 @@ abstract class BaseFragment<B : ViewDataBinding, Vm : ViewModel> : Fragment() {
      */
     private fun createViewModel(): Vm {
         // 获取 ViewModel 具体类型
-        val viewModelClass = getViewModelClass()
+        val clazz: Class<Vm> = TypeUtil.getClass(this, BaseFragment::class.java, 1)
         // 通过 ViewModelProvider 获取 ViewModel 实例
-        return ViewModelProvider(this)[viewModelClass]
-    }
-
-    /**
-     * 获取 ViewModel 具体类型
-     */
-    private fun getViewModelClass(): Class<Vm> {
-        return TypeUtil.getClass(this, BaseFragment::class.java, 1)
+        return ViewModelProvider(this)[clazz]
     }
 
     /**
